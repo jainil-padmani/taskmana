@@ -10,6 +10,7 @@ import 'package:taskmana/common/widgets/reusable_text.dart';
 import 'package:taskmana/common/widgets/wydth_spacer.dart';
 import 'package:taskmana/common/widgets/xpansion_tile.dart';
 import 'package:taskmana/features/todo/controllers/xpansion_provider.dart';
+import 'package:taskmana/features/todo/pages/add.dart';
 import 'package:taskmana/features/todo/widgets/todo_tile.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -49,7 +50,12 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                         borderRadius: BorderRadius.all(Radius.circular(9)),
                       ),
                       child: GestureDetector(
-                        onTap:  () {},
+                        onTap:  () {
+                          Navigator.push(
+                            context,
+                              MaterialPageRoute(builder: (context) => const AddTask()),
+                          );
+                        },
                         child: const Icon(Icons.add, color: AppConst.kBkDark,),
                       ),
                     )

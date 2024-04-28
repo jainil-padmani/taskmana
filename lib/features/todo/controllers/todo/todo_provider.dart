@@ -70,5 +70,5 @@ class TodoState extends _$TodoState {
     }
     return isCompleted;
   }
-
+  
 }

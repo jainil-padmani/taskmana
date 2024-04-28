@@ -3,7 +3,7 @@ import 'package:taskmana/common/utils/constants.dart';
 import 'package:taskmana/common/widgets/appstyle.dart';
 
 class CoustomtxtField extends StatelessWidget {
-  const CoustomtxtField({super.key, required this.keyboardType, required this.hintText, this.suffixIcon, this.prefixIcon, this.hintStyle, required this.controller, this.onChanged});
+  const CoustomtxtField({super.key, this.keyboardType, required this.hintText, this.suffixIcon, this.prefixIcon,  this.hintStyle, required this.controller, this.onChanged});
 
   final TextInputType? keyboardType;
   final String hintText;
