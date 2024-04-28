@@ -6,6 +6,8 @@ import 'package:taskmana/common/widgets/appstyle.dart';
 import 'package:taskmana/common/widgets/custom_otn_btn.dart';
 import 'package:taskmana/common/widgets/custome_text.dart';
 import 'package:taskmana/common/widgets/hieght_spacer.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
+import 'package:taskmana/features/todo/controllers/dates/dates_provider.dart';
 
 class AddTask extends ConsumerStatefulWidget {
   const AddTask({super.key});
@@ -19,6 +21,10 @@ class _AddTaskState extends ConsumerState<AddTask> {
   final TextEditingController desc = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var scheduleDate = ref.watch(dateStateProvider);
+    var start = ref.watch(startTimeStateProvider);
+    var finish = ref.watch(finishStateProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -48,10 +54,22 @@ class _AddTaskState extends ConsumerState<AddTask> {
             const HieghtSpacer(hieght: 20),
 
             CustomOtnBtn(
+              onTap: () {
+                picker.DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2024, 1, 1),
+                      maxTime: DateTime(2035, 1, 1),
+                      theme: const picker.DatePickerTheme(
+                          doneStyle:
+                              TextStyle(color: AppConst.kGreen, fontSize: 16)),
+                      onConfirm: (date) {
+                        ref.read(dateStateProvider.notifier).setDate(date.toString());
+                  }, currentTime: DateTime.now(), locale: picker.LocaleType.en);
+              },
               height: 52.h, 
               width: AppConst.kWidth, 
               color: AppConst.kLight, 
-              text: "Set Date",
+              text: scheduleDate == "" ? "Set Date": scheduleDate.substring(0,10),
               color2: AppConst.kBlueLight,
             ),
 
@@ -61,18 +79,32 @@ class _AddTaskState extends ConsumerState<AddTask> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomOtnBtn(
+                  onTap: () {
+                    picker.DatePicker.showDateTimePicker(context,
+                      showTitleActions: true,
+                      onConfirm: (date) {
+                        ref.read(startTimeStateProvider.notifier).setStart(date.toString());
+                    }, locale: picker.LocaleType.en);
+                  },
                   height: 52.h, 
                   width: AppConst.kWidth*0.4, 
                   color: AppConst.kLight, 
-                  text: "Start Time",
+                  text: start == "" ? "Start Time": start.substring(10,16),
                   color2: AppConst.kBlueLight,
                 ),
 
                 CustomOtnBtn(
+                  onTap: () {
+                    picker.DatePicker.showDateTimePicker(context,
+                      showTitleActions: true,
+                      onConfirm: (date) {
+                        ref.read(finishStateProvider.notifier).setFinish(date.toString());
+                    }, locale: picker.LocaleType.en);
+                  },
                   height: 52.h, 
                   width: AppConst.kWidth*0.4, 
                   color: AppConst.kLight, 
-                  text: "End Time",
+                  text: finish == "" ? "Finish Time": finish.substring(10,16),
                   color2: AppConst.kBlueLight,
                 ),
               ],
@@ -81,6 +113,9 @@ class _AddTaskState extends ConsumerState<AddTask> {
             const HieghtSpacer(hieght: 20),
 
             CustomOtnBtn(
+              onTap: () {
+                    
+                  },
               height: 52.h, 
               width: AppConst.kWidth, 
               color: AppConst.kLight, 
@@ -94,3 +129,6 @@ class _AddTaskState extends ConsumerState<AddTask> {
     );
   }
 }
+
+
+//  6 52 43     ---------------------------------------
